@@ -35,26 +35,3 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
-
-## инфо
-
-ecommerce-shop/
-├── .next/                  # Сборочные артефакты (игнорируются в git)
-├── node_modules/           # Установленные зависимости
-├── prisma/                 # Файлы схемы и миграций базы данных
-│   ├── migrations/         # История миграций Prisma
-│   └── schema.prisma       # Основная схема данных (Prisma ORM)
-├── public/                 # Публичные файлы (изображения, иконки и т.п.)
-├── src/                    # Основной исходный код проекта
-│   ├── app/                # App Router (Next.js 13+ структура)
-│   │   ├── api/            # Бэкенд (API routes)
-│   │   │   ├── auth/       # Авторизация (NextAuth + регистрация)
-│   │   │   ├── cart/       # Эндпоинты для корзины
-│   │   │   └── products/   # Эндпоинты для продуктов
-│   │   ├── layout.tsx      # Общий layout приложения
-│   │   └── page.tsx        # Главная страница сайта (роут `/`)
-├── .env                    # Конфиденциальные переменные (DATABASE_URL и др.)
-├── package.json            # Скрипты и зависимости проекта
-├── tsconfig.json           # Настройки TypeScript
-├── postcss.config.mjs      # Tailwind CSS конфиг
-├── README.md               # Документация по проекту

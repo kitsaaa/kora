@@ -2,15 +2,18 @@
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 
+type ProductVariant = { size: string; price: number };
+type Product = { title: string; variants: ProductVariant[] };
+type CartItem = { id: string; product: Product; quantity: number };
+
 export default function CartPage() {
-  const { data: session, status } = useSession();
-  const [cart, setCart] = useState<any[]>([]);
+  const { status } = useSession();
+  const [cart, setCart] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
     if (status === "authenticated") fetchCart();
-    // eslint-disable-next-line
   }, [status]);
 
   async function fetchCart() {
@@ -23,7 +26,7 @@ export default function CartPage() {
     else setError(data.error || "Failed to load cart");
   }
 
-  const total = cart.reduce((sum: number, item: any) => {
+  const total = cart.reduce((sum: number, item: CartItem) => {
     const price = item.product.variants[0]?.price || 0;
     return sum + price * item.quantity;
   }, 0);
@@ -42,7 +45,7 @@ export default function CartPage() {
       ) : (
         <>
           <ul className="divide-y">
-            {cart.map((item: any) => (
+            {cart.map((item) => (
               <li key={item.id} className="py-3 flex justify-between items-center">
                 <div>
                   <div className="font-semibold">{item.product.title}</div>
