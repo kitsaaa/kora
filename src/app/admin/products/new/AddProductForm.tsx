@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function AddProductForm() {
   const [title, setTitle] = useState("");
@@ -80,7 +81,7 @@ export default function AddProductForm() {
         <input type="file" multiple accept="image/*" onChange={handleImageUpload} disabled={uploading} />
         <div className="flex gap-2 mt-2 flex-wrap">
           {images.map((url, i) => (
-            <img key={i} src={url} alt="" className="w-16 h-16 object-cover rounded border" />
+            <Image key={i} src={url} alt="" width={64} height={64} className="w-16 h-16 object-cover rounded border" />
           ))}
         </div>
       </div>

@@ -4,9 +4,8 @@ import { PrismaClient } from "@prisma/client";
 import { redirect } from "next/navigation";
 import EditProductForm from "./EditProductForm";
 
-export default async function EditProductPage(props: { params: { id: string } }) {
-  const { params } = await Promise.resolve(props);
-  const id = typeof params.id === 'string' ? params.id : await params.id;
+export default async function EditProductPage({ params }: { params: { id: string } }) {
+  const id = params.id;
   const session = await getServerSession(authOptions);
   if (!session?.user?.email) redirect("/auth/signin");
   const prisma = new PrismaClient();

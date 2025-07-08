@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 type ProductVariant = { id?: string; size: string; price: number };
 type Product = { id: string; title: string; slug: string; category: string; available: boolean; images: string[]; variants: ProductVariant[] };
@@ -102,7 +103,7 @@ export default function EditProductForm({ product }: { product: Product }) {
         <div className="flex gap-2 mt-2 flex-wrap">
           {images.map((url, i) => (
             <div key={i} className="relative group">
-              <img src={url} alt="" className="w-16 h-16 object-cover rounded border" />
+              <Image src={url} alt="" width={64} height={64} className="w-16 h-16 object-cover rounded border" />
               <button type="button" className="absolute top-0 right-0 bg-red-600 text-white text-xs rounded px-1 opacity-80 group-hover:opacity-100" onClick={() => removeImage(i)}>✕</button>
             </div>
           ))}
