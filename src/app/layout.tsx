@@ -1,7 +1,5 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import NextAuthSessionProvider from "./SessionProvider";
-import Header from "./Header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,20 +17,10 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const pathname = typeof window !== "undefined" ? window.location.pathname : "";
-  const isAdmin = pathname.startsWith("/admin");
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <NextAuthSessionProvider>
-          {!isAdmin && <Header />}
-          <main className="min-h-[70vh] px-4 sm:px-8 py-8">{children}</main>
-          {!isAdmin && (
-            <footer className="w-full bg-zinc-900 text-white py-4 px-8 text-center text-sm mt-12">
-              &copy; {new Date().getFullYear()} E-Shop. All rights reserved.
-            </footer>
-          )}
-        </NextAuthSessionProvider>
+        {children}
       </body>
     </html>
   );
