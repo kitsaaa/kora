@@ -1,11 +1,11 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/api/auth/authOptions";
 import { PrismaClient } from "@prisma/client";
 import { redirect } from "next/navigation";
 import EditProductForm from "./EditProductForm";
 
-export default async function EditProductPage({ params }: { params: { id: string } }) {
-  const id = params.id;
+export default async function EditProductPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const session = await getServerSession(authOptions);
   if (!session?.user?.email) redirect("/auth/signin");
   const prisma = new PrismaClient();

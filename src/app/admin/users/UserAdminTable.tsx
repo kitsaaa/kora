@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-type User = { id: string; name?: string; email: string; role: string; lastLogin?: string };
+type User = { id: string; name?: string | null; email: string; role: string; lastLogin?: string };
 
 export default function UserAdminTable({ users, currentUserId }: { users: User[]; currentUserId: string }) {
   const [userList, setUserList] = useState(users);

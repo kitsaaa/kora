@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/app/api/auth/authOptions';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export async function PATCH(req: Request, context: { params: { id: string } }) {
-  const { params } = await Promise.resolve(context);
+export async function PATCH(req: Request, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const session = await getServerSession(authOptions);
   if (!session?.user?.email) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -22,7 +22,7 @@ export async function PATCH(req: Request, context: { params: { id: string } }) {
   try {
     // Update product fields
     await prisma.product.update({
-      where: { id: params.id },
+      where: { id },
       data: {
         title,
         slug,
@@ -32,16 +32,16 @@ export async function PATCH(req: Request, context: { params: { id: string } }) {
       },
     });
     // Update variants: delete all and recreate (simple approach)
-    await prisma.productVariant.deleteMany({ where: { productId: params.id } });
+    await prisma.productVariant.deleteMany({ where: { productId: id } });
     await prisma.product.update({
-      where: { id: params.id },
+      where: { id },
       data: {
         variants: {
           create: variants.map((v: { size: string; price: number }) => ({ size: v.size, price: v.price })),
         },
       },
     });
-    const product = await prisma.product.findUnique({ where: { id: params.id }, include: { variants: true } });
+    const product = await prisma.product.findUnique({ where: { id }, include: { variants: true } });
     return NextResponse.json({ product });
   } catch (e: unknown) {
     const error = e as Error;
@@ -49,8 +49,8 @@ export async function PATCH(req: Request, context: { params: { id: string } }) {
   }
 }
 
-export async function DELETE(req: Request, context: { params: { id: string } }) {
-  const { params } = await Promise.resolve(context);
+export async function DELETE(req: Request, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const session = await getServerSession(authOptions);
   if (!session?.user?.email) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -60,8 +60,8 @@ export async function DELETE(req: Request, context: { params: { id: string } }) 
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
   }
   try {
-    await prisma.productVariant.deleteMany({ where: { productId: params.id } });
-    const deleted = await prisma.product.delete({ where: { id: params.id } });
+    await prisma.productVariant.deleteMany({ where: { productId: id } });
+    const deleted = await prisma.product.delete({ where: { id } });
     return NextResponse.json({ deleted });
   } catch (e: unknown) {
     const error = e as Error;
