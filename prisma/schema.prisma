@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String     @id @default(cuid())
+  email          String     @unique
+  passwordHash   String
+  name           String?
+  role           String     @default("user") // 'user' or 'admin'
+  lastLogin      DateTime?  // optional: track last login
+  createdAt      DateTime   @default(now())
+  cartItems      CartItem[]
+}
+
+model Product {
+  id             String           @id @default(cuid())
+  title          String
+  slug           String           @unique
+  category       String
+  available      Boolean          @default(true)
+  variants       ProductVariant[]
+  images         String[]         // Array of image URLs
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  cartItems      CartItem[]
+}
+
+model ProductVariant {
+  id        String   @id @default(cuid())
+  size      String
+  price     Float
+  product   Product  @relation(fields: [productId], references: [id])
+  productId String
+}
+
+model CartItem {
+  id         String   @id @default(cuid())
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+  product    Product  @relation(fields: [productId], references: [id])
+  productId  String
+  quantity   Int      @default(1)
+  createdAt  DateTime @default(now())
+
+  @@unique([userId, productId])
+}
