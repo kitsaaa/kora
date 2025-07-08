@@ -1,7 +1,6 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/authOptions";
 import { prisma } from "@/lib/prisma";
-import { useState } from "react";
 import Link from "next/link";
 import SignOutButton from "./SignOutButton";
 import { redirect } from "next/navigation";
