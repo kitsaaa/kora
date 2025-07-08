@@ -5,6 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 
+type Product = { id: string; title: string; category: string; available: boolean; images: string[] };
+
 export default async function AdminProductsPage() {
   const session = await getServerSession(authOptions);
   if (!session?.user?.email) redirect("/auth/signin");
@@ -31,7 +33,7 @@ export default async function AdminProductsPage() {
             </tr>
           </thead>
           <tbody>
-            {products.map((p: any) => (
+            {products.map((p: Product) => (
               <tr key={p.id} className="border-b">
                 <td className="py-2">
                   {p.images?.[0] ? (

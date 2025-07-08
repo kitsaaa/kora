@@ -24,7 +24,7 @@ export async function POST(request: Request) {
       select: { id: true, email: true, name: true, createdAt: true },
     });
     return NextResponse.json({ user });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Registration failed.' }, { status: 500 });
   }
 } 

@@ -19,7 +19,8 @@ export async function DELETE(req: Request, context: { params: { id: string } }) 
   try {
     const deleted = await prisma.user.delete({ where: { id } });
     return NextResponse.json({ deleted });
-  } catch (e: any) {
-    return NextResponse.json({ error: e.message || 'Failed to delete user' }, { status: 500 });
+  } catch (e: unknown) {
+    const error = e as Error;
+    return NextResponse.json({ error: error.message || 'Failed to delete user' }, { status: 500 });
   }
 } 

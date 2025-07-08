@@ -27,13 +27,14 @@ export async function POST(req: Request) {
         available,
         images,
         variants: {
-          create: variants.map((v: any) => ({ size: v.size, price: v.price })),
+          create: variants.map((v: { size: string; price: number }) => ({ size: v.size, price: v.price })),
         },
       },
       include: { variants: true },
     });
     return NextResponse.json({ product });
-  } catch (e: any) {
-    return NextResponse.json({ error: e.message || 'Failed to create product' }, { status: 500 });
+  } catch (e: unknown) {
+    const error = e as Error;
+    return NextResponse.json({ error: error.message || 'Failed to create product' }, { status: 500 });
   }
 } 

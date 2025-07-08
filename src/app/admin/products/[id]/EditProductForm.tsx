@@ -2,30 +2,33 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function EditProductForm({ product }: { product: any }) {
+type ProductVariant = { id?: string; size: string; price: number };
+type Product = { id: string; title: string; slug: string; category: string; available: boolean; images: string[]; variants: ProductVariant[] };
+
+export default function EditProductForm({ product }: { product: Product }) {
   const [title, setTitle] = useState(product.title);
   const [slug, setSlug] = useState(product.slug);
   const [category, setCategory] = useState(product.category);
   const [available, setAvailable] = useState(product.available);
   const [images, setImages] = useState<string[]>(product.images || []);
   const [uploading, setUploading] = useState(false);
-  const [variants, setVariants] = useState(product.variants.map((v: any) => ({ id: v.id, size: v.size, price: v.price })));
+  const [variants, setVariants] = useState<ProductVariant[]>(product.variants.map((v) => ({ id: v.id, size: v.size, price: v.price })));
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [deleting, setDeleting] = useState(false);
   const router = useRouter();
 
   function handleVariantChange(idx: number, field: string, value: string | number) {
-    setVariants((vs: any[]) => vs.map((v: any, i: number) => i === idx ? { ...v, [field]: value } : v));
+    setVariants((vs) => vs.map((v, i) => i === idx ? { ...v, [field]: value } : v));
   }
   function addVariant() {
-    setVariants((vs: any[]) => [...vs, { size: "", price: 0 }]);
+    setVariants((vs) => [...vs, { size: "", price: 0 }]);
   }
   function removeVariant(idx: number) {
-    setVariants((vs: any[]) => vs.filter((_: any, i: number) => i !== idx));
+    setVariants((vs) => vs.filter((_, i) => i !== idx));
   }
   function removeImage(idx: number) {
-    setImages((imgs: string[]) => imgs.filter((_: any, i: number) => i !== idx));
+    setImages((imgs) => imgs.filter((_, i) => i !== idx));
   }
 
   async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
@@ -108,7 +111,7 @@ export default function EditProductForm({ product }: { product: any }) {
       <div>
         <label className="block mb-1">Variants</label>
         <div className="flex flex-col gap-2">
-          {variants.map((v: any, i: number) => (
+          {variants.map((v, i: number) => (
             <div key={v.id || i} className="flex gap-2 items-center">
               <input type="text" placeholder="Size" className="input input-bordered flex-1" value={v.size} onChange={e => handleVariantChange(i, "size", e.target.value)} required />
               <input type="number" placeholder="Price" className="input input-bordered w-32" value={v.price} onChange={e => handleVariantChange(i, "price", Number(e.target.value))} required min={0} />

@@ -18,9 +18,9 @@ export async function POST(req: Request) {
         else resolve(result);
       }).end(buffer);
     });
-    // @ts-ignore
+    // @ts-expect-error Cloudinary types are not compatible with the result object
     return NextResponse.json({ url: upload.secure_url });
-  } catch (e) {
+  } catch {
     return NextResponse.json({ error: 'Upload failed' }, { status: 500 });
   }
 } 

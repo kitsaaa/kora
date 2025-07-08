@@ -21,7 +21,7 @@ export async function PATCH(req: Request, context: { params: { id: string } }) {
   }
   try {
     // Update product fields
-    const updated = await prisma.product.update({
+    await prisma.product.update({
       where: { id: params.id },
       data: {
         title,
@@ -37,14 +37,15 @@ export async function PATCH(req: Request, context: { params: { id: string } }) {
       where: { id: params.id },
       data: {
         variants: {
-          create: variants.map((v: any) => ({ size: v.size, price: v.price })),
+          create: variants.map((v: { size: string; price: number }) => ({ size: v.size, price: v.price })),
         },
       },
     });
     const product = await prisma.product.findUnique({ where: { id: params.id }, include: { variants: true } });
     return NextResponse.json({ product });
-  } catch (e: any) {
-    return NextResponse.json({ error: e.message || 'Failed to update product' }, { status: 500 });
+  } catch (e: unknown) {
+    const error = e as Error;
+    return NextResponse.json({ error: error.message || 'Failed to update product' }, { status: 500 });
   }
 }
 
@@ -62,7 +63,8 @@ export async function DELETE(req: Request, context: { params: { id: string } }) 
     await prisma.productVariant.deleteMany({ where: { productId: params.id } });
     const deleted = await prisma.product.delete({ where: { id: params.id } });
     return NextResponse.json({ deleted });
-  } catch (e: any) {
-    return NextResponse.json({ error: e.message || 'Failed to delete product' }, { status: 500 });
+  } catch (e: unknown) {
+    const error = e as Error;
+    return NextResponse.json({ error: error.message || 'Failed to delete product' }, { status: 500 });
   }
 } 
