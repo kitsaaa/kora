@@ -19,7 +19,7 @@ export default function CatalogPage() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 bg-zinc-50 min-h-screen">
-      <h1 className="text-3xl font-bold mb-8 text-center text-zinc-900">Product Catalog</h1>
+      <h1 className="text-3xl font-bold mb-8 text-center text-zinc-900">Каталог</h1>
       {loading ? (
         <div className="text-center text-zinc-500">Loading...</div>
       ) : products.length === 0 ? (
@@ -32,13 +32,13 @@ export default function CatalogPage() {
               className="bg-white rounded-2xl shadow-lg border border-zinc-100 flex flex-col transition-transform duration-200 hover:scale-[1.03] hover:shadow-2xl group overflow-hidden min-h-[420px]"
             >
               {product.images && product.images.length > 0 && (
-                <div className="relative w-full aspect-[4/3] bg-zinc-100 flex items-center justify-center">
+                <div className="relative w-full aspect-[4/3] bg-zinc-100 flex items-center justify-center overflow-hidden">
                   <Image
                     src={product.images[0]}
                     alt={product.title}
                     fill
                     sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-contain w-full h-full"
+                    className="object-contain w-full h-full transition-transform duration-300 group-hover:scale-105"
                     priority={true}
                   />
                 </div>
@@ -50,9 +50,10 @@ export default function CatalogPage() {
                   <span className="font-extrabold text-2xl text-zinc-900">{product.variants[0]?.price ?? "-"}₽</span>
                   <Link
                     href={`/product/${product.id}`}
-                    className="text-blue-600 hover:underline font-medium text-base px-3 py-1 rounded hover:bg-blue-50 transition-colors"
+                    className="text-white hover:bg-[#2E6F40]/90 font-medium text-base px-3 py-1 rounded transition-colors"
+                    style={{ backgroundColor: '#2E6F40' }}
                   >
-                    Details
+                    Подробнее
                   </Link>
                 </div>
               </div>

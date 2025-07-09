@@ -2,16 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import NextAuthSessionProvider from "./SessionProvider";
 import Header from "./Header";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import { CartProvider } from "./CartProvider";
 
 export const metadata = {
   title: "Create Next App",
@@ -20,12 +11,14 @@ export const metadata = {
 
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
   return (
-    <NextAuthSessionProvider>
-      <Header />
-      <main className="min-h-[70vh] px-4 sm:px-8 py-8">{children}</main>
-      <footer className="w-full bg-zinc-100 text-zinc-700 py-4 px-8 text-center text-sm mt-12 border-t border-zinc-200">
-        &copy; 2024 E-Shop. All rights reserved.
-      </footer>
-    </NextAuthSessionProvider>
+    <CartProvider>
+      <NextAuthSessionProvider>
+        <Header />
+        <main className="min-h-[70vh] px-4 sm:px-8 py-8">{children}</main>
+        <footer className="w-full bg-zinc-100 text-zinc-700 py-4 px-8 text-center text-sm mt-12 border-t border-zinc-200">
+          &copy; 2024 E-Shop. All rights reserved.
+        </footer>
+      </NextAuthSessionProvider>
+    </CartProvider>
   );
 } 

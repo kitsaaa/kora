@@ -4,7 +4,7 @@ import cloudinary from '@/lib/cloudinary';
 interface CloudinaryUploadResult {
   secure_url: string;
   public_id: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export async function POST(req: Request) {

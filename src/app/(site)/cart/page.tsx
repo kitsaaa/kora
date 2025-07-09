@@ -1,66 +1,45 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
-
-type ProductVariant = { size: string; price: number };
-type Product = { title: string; variants: ProductVariant[] };
-type CartItem = { id: string; product: Product; quantity: number };
+import { useCart } from "../CartProvider";
+import Link from "next/link";
 
 export default function CartPage() {
-  const { status } = useSession();
-  const [cart, setCart] = useState<CartItem[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const { cart, updateQuantity, removeFromCart, clearCart } = useCart();
 
-  useEffect(() => {
-    if (status === "authenticated") fetchCart();
-  }, [status]);
-
-  async function fetchCart() {
-    setLoading(true);
-    setError("");
-    const res = await fetch("/api/cart");
-    const data = await res.json();
-    setLoading(false);
-    if (res.ok) setCart(data.cart);
-    else setError(data.error || "Failed to load cart");
-  }
-
-  const total = cart.reduce((sum: number, item: CartItem) => {
-    const price = item.product.variants[0]?.price || 0;
-    return sum + price * item.quantity;
-  }, 0);
+  // For demo, you may want to fetch product/variant details from API, but here we assume all info is in cart
+  const total = cart.reduce((sum, item) => sum + (item.quantity * (item.price || 0)), 0);
 
   return (
-    <div className="max-w-2xl mx-auto mt-12 p-6 bg-white rounded shadow-md border border-zinc-200">
-      <h1 className="text-2xl font-bold mb-6">Корзина</h1>
-      {status !== "authenticated" ? (
-        <div className="text-center text-zinc-600">Пожалуйста, войдите, чтобы просматривать корзину.</div>
-      ) : loading ? (
-        <div className="text-center text-zinc-600">Загрузка...</div>
-      ) : error ? (
-        <div className="mb-4 text-red-600 text-sm">{error}</div>
-      ) : cart.length === 0 ? (
-        <div className="text-zinc-600">Ваша корзина пуста.</div>
+    <div className="max-w-2xl mx-auto mt-12 p-6 bg-white rounded-2xl shadow-lg border border-zinc-100">
+      <h1 className="text-3xl font-bold mb-6 text-zinc-900">Корзина</h1>
+      {cart.length === 0 ? (
+        <div className="text-zinc-600 text-center">Ваша корзина пуста.</div>
       ) : (
         <>
           <ul className="divide-y divide-zinc-200">
-            {cart.map((item) => (
-              <li key={item.id} className="py-3 flex justify-between items-center">
-                <div>
-                  <div className="font-semibold">{item.product.title}</div>
-                  <div className="text-xs text-zinc-500">Вариант: {item.product.variants[0]?.size}</div>
+            {cart.map((item, idx) => (
+              <li key={item.productId + item.variantId} className="flex items-center gap-4 py-4">
+                <div className="flex-1">
+                  <div className="font-semibold text-lg text-zinc-900">{item.title}</div>
+                  <div className="text-sm text-zinc-600">{item.variantLabel}</div>
                 </div>
-                <div className="flex items-center gap-4">
-                  <span>×{item.quantity}</span>
-                  <span className="font-mono">{item.product.variants[0]?.price * item.quantity}₽</span>
+                <div className="flex items-center gap-2">
+                  <button onClick={() => updateQuantity(item.productId, item.variantId, item.quantity - 1)} className="px-2 py-1 rounded bg-zinc-100 text-zinc-700 hover:bg-zinc-200">-</button>
+                  <span className="w-8 text-center">{item.quantity}</span>
+                  <button onClick={() => updateQuantity(item.productId, item.variantId, item.quantity + 1)} className="px-2 py-1 rounded bg-zinc-100 text-zinc-700 hover:bg-zinc-200">+</button>
                 </div>
+                <div className="w-20 text-right text-zinc-900 font-semibold">{item.price} ₽</div>
+                <button onClick={() => removeFromCart(item.productId, item.variantId)} className="ml-2 text-red-500 hover:text-red-700" aria-label="Удалить">×</button>
               </li>
             ))}
           </ul>
-          <div className="mt-6 text-right font-bold text-lg">Итого: {total}₽</div>
+          <div className="flex justify-between items-center mt-8">
+            <button onClick={clearCart} className="px-4 py-2 bg-zinc-100 text-zinc-700 rounded hover:bg-zinc-200">Очистить корзину</button>
+            <div className="text-xl font-bold text-zinc-900">Итого: {total} ₽</div>
+            <button className="px-6 py-2 text-white rounded hover:bg-[#2E6F40]/90 font-semibold" style={{ backgroundColor: '#2E6F40' }}>Оформить заказ</button>
+          </div>
         </>
       )}
+      <Link href="/catalog" className="block mt-6 text-blue-700 hover:underline text-center font-medium">← Продолжить покупки</Link>
     </div>
   );
 } 

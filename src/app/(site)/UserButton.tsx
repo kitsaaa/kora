@@ -31,7 +31,7 @@ export function UserButton() {
         <button
           className="flex items-center gap-1 hover:underline focus:outline-none"
           onClick={() => setOpen((v) => !v)}
-          aria-label="Profile"
+          aria-label="Профиль"
         >
           <UserIcon className="w-6 h-6" />
         </button>
@@ -44,13 +44,13 @@ export function UserButton() {
               className="block w-full text-left px-4 py-2 text-sm hover:bg-zinc-100 text-zinc-900 transition"
               onClick={() => { setOpen(false); router.push("/profile"); }}
             >
-              Profile
+              Профиль
             </button>
             <button
               className="block w-full text-left px-4 py-2 text-sm hover:bg-zinc-100 text-zinc-900 transition"
               onClick={() => { setOpen(false); signOut({ callbackUrl: "/auth/signin" }); }}
             >
-              Sign out
+              Выйти
             </button>
           </div>
         )}
@@ -58,6 +58,6 @@ export function UserButton() {
     );
   }
   return (
-    <Link href="/auth/signin" className="px-4 py-2 bg-zinc-900 text-white rounded hover:bg-zinc-800 font-semibold">Sign In</Link>
+    <Link href="/auth/signin" className="px-4 py-2 text-white rounded hover:bg-[#2E6F40]/90 font-semibold" style={{ backgroundColor: '#2E6F40' }}>Войти</Link>
   );
 } 

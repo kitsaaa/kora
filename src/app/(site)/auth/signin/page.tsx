@@ -25,9 +25,9 @@ export default function AuthPage() {
     });
     setLoading(false);
     if (res?.error) {
-      setError("Invalid email or password.");
+      setError("Неверный email или пароль.");
     } else {
-      setSuccess("Signed in! Redirecting...");
+      setSuccess("Вход выполнен! Перенаправление...");
       setTimeout(() => router.push("/"), 1000);
     }
   }
@@ -57,27 +57,30 @@ export default function AuthPage() {
     
     setLoading(false);
     if (!res.ok) {
-      setError(data?.error || "Registration failed.");
+      setError(data?.error || "Регистрация не удалась.");
     } else {
-      setSuccess("Registration successful! You can now sign in.");
+      setSuccess("Регистрация успешна! Теперь вы можете войти.");
       setMode("signin");
     }
   }
 
   return (
-    <div className="max-w-md mx-auto mt-20 p-8 bg-white rounded shadow-md border border-zinc-200">
+    <div className="flex items-center justify-center min-h-[60vh] py-8 bg-zinc-50">
+      <div className="max-w-md w-full mx-auto p-6 bg-white rounded-2xl shadow-lg border border-zinc-100">
       <div className="flex mb-6">
         <button
-          className={`flex-1 py-2 font-semibold rounded-l ${mode === "signin" ? "bg-zinc-900 text-white" : "bg-zinc-100 text-zinc-700"}`}
+          className={`flex-1 py-2 font-semibold rounded-l transition-all duration-150 border ${mode === "signin" ? "text-white shadow" : "bg-zinc-100 text-zinc-500 border-zinc-200"}`}
+          style={mode === "signin" ? { backgroundColor: '#2E6F40', borderColor: '#2E6F40' } : {}}
           onClick={() => { setMode("signin"); setError(""); setSuccess(""); }}
         >
-          Sign In
+          Войти
         </button>
         <button
-          className={`flex-1 py-2 font-semibold rounded-r ${mode === "signup" ? "bg-zinc-900 text-white" : "bg-zinc-100 text-zinc-700"}`}
+          className={`flex-1 py-2 font-semibold rounded-r transition-all duration-150 border ${mode === "signup" ? "text-white shadow" : "bg-zinc-100 text-zinc-500 border-zinc-200"}`}
+          style={mode === "signup" ? { backgroundColor: '#2E6F40', borderColor: '#2E6F40' } : {}}
           onClick={() => { setMode("signup"); setError(""); setSuccess(""); }}
         >
-          Sign Up
+          Регистрация
         </button>
       </div>
       {error && <div className="mb-4 text-red-600 text-sm">{error}</div>}
@@ -87,7 +90,7 @@ export default function AuthPage() {
           <input
             type="email"
             placeholder="Email"
-            className="input input-bordered w-full px-3 py-2 rounded border border-zinc-300 bg-zinc-50"
+            className="w-full px-3 py-2 rounded border border-zinc-300 bg-white text-zinc-900 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900"
             value={email}
             onChange={e => setEmail(e.target.value)}
             required
@@ -95,8 +98,8 @@ export default function AuthPage() {
           />
           <input
             type="password"
-            placeholder="Password"
-            className="input input-bordered w-full px-3 py-2 rounded border border-zinc-300 bg-zinc-50"
+            placeholder="Пароль"
+            className="w-full px-3 py-2 rounded border border-zinc-300 bg-white text-zinc-900 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900"
             value={password}
             onChange={e => setPassword(e.target.value)}
             required
@@ -104,18 +107,19 @@ export default function AuthPage() {
           />
           <button
             type="submit"
-            className="w-full py-2 rounded bg-zinc-900 text-white font-semibold hover:bg-zinc-800 disabled:opacity-60"
+            className="w-full py-2 rounded text-white font-semibold hover:bg-[#2E6F40]/90 focus:outline-none focus:ring-2 transition disabled:opacity-60 shadow"
+            style={{ backgroundColor: '#2E6F40' }}
             disabled={loading}
           >
-            {loading ? "Signing in..." : "Sign In"}
+            {loading ? "Вход..." : "Войти"}
           </button>
         </form>
       ) : (
         <form onSubmit={handleSignUp} className="flex flex-col gap-4">
           <input
             type="text"
-            placeholder="Name (optional)"
-            className="input input-bordered w-full px-3 py-2 rounded border border-zinc-300 bg-zinc-50"
+            placeholder="Имя (необязательно)"
+            className="w-full px-3 py-2 rounded border border-zinc-300 bg-white text-zinc-900 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900"
             value={name}
             onChange={e => setName(e.target.value)}
             autoComplete="name"
@@ -123,7 +127,7 @@ export default function AuthPage() {
           <input
             type="email"
             placeholder="Email"
-            className="input input-bordered w-full px-3 py-2 rounded border border-zinc-300 bg-zinc-50"
+            className="w-full px-3 py-2 rounded border border-zinc-300 bg-white text-zinc-900 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900"
             value={email}
             onChange={e => setEmail(e.target.value)}
             required
@@ -131,8 +135,8 @@ export default function AuthPage() {
           />
           <input
             type="password"
-            placeholder="Password"
-            className="input input-bordered w-full px-3 py-2 rounded border border-zinc-300 bg-zinc-50"
+            placeholder="Пароль"
+            className="w-full px-3 py-2 rounded border border-zinc-300 bg-white text-zinc-900 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900"
             value={password}
             onChange={e => setPassword(e.target.value)}
             required
@@ -140,13 +144,15 @@ export default function AuthPage() {
           />
           <button
             type="submit"
-            className="w-full py-2 rounded bg-zinc-900 text-white font-semibold hover:bg-zinc-800 disabled:opacity-60"
+            className="w-full py-2 rounded text-white font-semibold hover:bg-[#2E6F40]/90 focus:outline-none focus:ring-2 transition disabled:opacity-60 shadow"
+            style={{ backgroundColor: '#2E6F40' }}
             disabled={loading}
           >
-            {loading ? "Signing up..." : "Sign Up"}
+            {loading ? "Регистрация..." : "Зарегистрироваться"}
           </button>
         </form>
       )}
+      </div>
     </div>
   );
 } 
