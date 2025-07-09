@@ -16,7 +16,7 @@ export default function CartPage() {
       ) : (
         <>
           <ul className="divide-y divide-zinc-200">
-            {cart.map((item, idx) => (
+            {cart.map((item) => (
               <li key={item.productId + item.variantId} className="flex items-center gap-4 py-4">
                 <div className="flex-1">
                   <div className="font-semibold text-lg text-zinc-900">{item.title}</div>

@@ -1,4 +1,3 @@
-import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import NextAuthSessionProvider from "./SessionProvider";
 import Header from "./Header";
