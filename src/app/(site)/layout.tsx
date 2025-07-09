@@ -20,16 +20,12 @@ export const metadata = {
 
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <NextAuthSessionProvider>
-          <Header />
-          <main className="min-h-[70vh] px-4 sm:px-8 py-8">{children}</main>
-          <footer className="w-full bg-zinc-900 text-white py-4 px-8 text-center text-sm mt-12">
-            &copy; {new Date().getFullYear()} E-Shop. All rights reserved.
-          </footer>
-        </NextAuthSessionProvider>
-      </body>
-    </html>
+    <NextAuthSessionProvider>
+      <Header />
+      <main className="min-h-[70vh] px-4 sm:px-8 py-8">{children}</main>
+      <footer className="w-full bg-zinc-100 text-zinc-700 py-4 px-8 text-center text-sm mt-12 border-t border-zinc-200">
+        &copy; 2024 E-Shop. All rights reserved.
+      </footer>
+    </NextAuthSessionProvider>
   );
 } 

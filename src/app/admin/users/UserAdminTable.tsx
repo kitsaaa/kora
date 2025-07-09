@@ -81,7 +81,7 @@ export default function UserAdminTable({ users, currentUserId }: { users: User[]
           </thead>
           <tbody>
             {userList.map(u => (
-              <tr key={u.id} className={`border-b ${u.id === currentUserId ? "bg-zinc-100 dark:bg-zinc-800" : ""}`}>
+              <tr key={u.id} className={`border-b ${u.id === currentUserId ? "bg-zinc-100" : ""}`}>
                 <td className="py-2">{u.name || <span className="text-zinc-400">—</span>}</td>
                 <td className="py-2">{u.email}</td>
                 <td className="py-2 text-center">{u.role}</td>

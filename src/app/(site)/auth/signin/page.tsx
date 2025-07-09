@@ -42,10 +42,22 @@ export default function AuthPage() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password, name }),
     });
-    const data = await res.json();
+    
+    // Safely parse JSON response
+    let data;
+    try {
+      const text = await res.text();
+      data = text ? JSON.parse(text) : null;
+    } catch (e) {
+      console.error("Failed to parse registration response:", e);
+      setError("Registration failed - invalid response");
+      setLoading(false);
+      return;
+    }
+    
     setLoading(false);
     if (!res.ok) {
-      setError(data.error || "Registration failed.");
+      setError(data?.error || "Registration failed.");
     } else {
       setSuccess("Registration successful! You can now sign in.");
       setMode("signin");
@@ -53,16 +65,16 @@ export default function AuthPage() {
   }
 
   return (
-    <div className="max-w-md mx-auto mt-20 p-8 bg-white dark:bg-zinc-900 rounded shadow-md border border-zinc-200 dark:border-zinc-800">
+    <div className="max-w-md mx-auto mt-20 p-8 bg-white rounded shadow-md border border-zinc-200">
       <div className="flex mb-6">
         <button
-          className={`flex-1 py-2 font-semibold rounded-l ${mode === "signin" ? "bg-zinc-900 text-white" : "bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300"}`}
+          className={`flex-1 py-2 font-semibold rounded-l ${mode === "signin" ? "bg-zinc-900 text-white" : "bg-zinc-100 text-zinc-700"}`}
           onClick={() => { setMode("signin"); setError(""); setSuccess(""); }}
         >
           Sign In
         </button>
         <button
-          className={`flex-1 py-2 font-semibold rounded-r ${mode === "signup" ? "bg-zinc-900 text-white" : "bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300"}`}
+          className={`flex-1 py-2 font-semibold rounded-r ${mode === "signup" ? "bg-zinc-900 text-white" : "bg-zinc-100 text-zinc-700"}`}
           onClick={() => { setMode("signup"); setError(""); setSuccess(""); }}
         >
           Sign Up
@@ -75,7 +87,7 @@ export default function AuthPage() {
           <input
             type="email"
             placeholder="Email"
-            className="input input-bordered w-full px-3 py-2 rounded border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800"
+            className="input input-bordered w-full px-3 py-2 rounded border border-zinc-300 bg-zinc-50"
             value={email}
             onChange={e => setEmail(e.target.value)}
             required
@@ -84,7 +96,7 @@ export default function AuthPage() {
           <input
             type="password"
             placeholder="Password"
-            className="input input-bordered w-full px-3 py-2 rounded border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800"
+            className="input input-bordered w-full px-3 py-2 rounded border border-zinc-300 bg-zinc-50"
             value={password}
             onChange={e => setPassword(e.target.value)}
             required
@@ -103,7 +115,7 @@ export default function AuthPage() {
           <input
             type="text"
             placeholder="Name (optional)"
-            className="input input-bordered w-full px-3 py-2 rounded border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800"
+            className="input input-bordered w-full px-3 py-2 rounded border border-zinc-300 bg-zinc-50"
             value={name}
             onChange={e => setName(e.target.value)}
             autoComplete="name"
@@ -111,7 +123,7 @@ export default function AuthPage() {
           <input
             type="email"
             placeholder="Email"
-            className="input input-bordered w-full px-3 py-2 rounded border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800"
+            className="input input-bordered w-full px-3 py-2 rounded border border-zinc-300 bg-zinc-50"
             value={email}
             onChange={e => setEmail(e.target.value)}
             required
@@ -120,7 +132,7 @@ export default function AuthPage() {
           <input
             type="password"
             placeholder="Password"
-            className="input input-bordered w-full px-3 py-2 rounded border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800"
+            className="input input-bordered w-full px-3 py-2 rounded border border-zinc-300 bg-zinc-50"
             value={password}
             onChange={e => setPassword(e.target.value)}
             required

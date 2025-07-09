@@ -19,15 +19,15 @@ export default async function AdminHome() {
     <div className="max-w-xl mx-auto mt-20 text-center">
       <h1 className="text-3xl font-bold mb-6">Admin Dashboard</h1>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
-        <div className="bg-zinc-100 dark:bg-zinc-800 rounded p-6">
+        <div className="bg-zinc-100 rounded p-6">
           <div className="text-2xl font-bold">{productCount}</div>
           <div className="text-zinc-600">Products</div>
         </div>
-        <div className="bg-zinc-100 dark:bg-zinc-800 rounded p-6">
+        <div className="bg-zinc-100 rounded p-6">
           <div className="text-2xl font-bold">{userCount}</div>
           <div className="text-zinc-600">Users</div>
         </div>
-        <div className="bg-zinc-100 dark:bg-zinc-800 rounded p-6">
+        <div className="bg-zinc-100 rounded p-6">
           <div className="text-2xl font-bold">{adminCount}</div>
           <div className="text-zinc-600">Admins</div>
         </div>

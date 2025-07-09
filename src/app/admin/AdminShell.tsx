@@ -6,7 +6,7 @@ import { useState } from "react";
 export default function AdminShell({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   return (
-    <div className="min-h-screen flex flex-col bg-zinc-50 dark:bg-zinc-900">
+    <div className="min-h-screen flex flex-col bg-white">
       {/* Mobile top bar */}
       <div className="md:hidden flex items-center justify-between bg-zinc-900 text-white px-4 py-3">
         <Link href="/admin" className="text-xl font-bold">Admin</Link>
@@ -18,7 +18,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
       </div>
       <div className="flex-1 flex flex-col md:flex-row">
         {/* Sidebar */}
-        <aside className={`bg-zinc-900 text-white w-64 max-w-full flex-col p-6 gap-4 fixed md:static top-0 left-0 h-full z-40 transition-transform duration-200 ease-in-out ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 md:flex md:min-h-screen`}>
+        <aside className={`bg-zinc-100 text-zinc-900 w-64 max-w-full flex-col p-6 gap-4 fixed md:static top-0 left-0 h-full z-40 transition-transform duration-200 ease-in-out border-r border-zinc-200 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 md:flex md:min-h-screen`}>
           <Link href="/admin" className="text-2xl font-bold mb-8 hover:underline" onClick={() => setSidebarOpen(false)}>Admin</Link>
           <nav className="flex flex-col gap-2">
             <Link href="/admin/products" className="hover:underline" onClick={() => setSidebarOpen(false)}>Products</Link>

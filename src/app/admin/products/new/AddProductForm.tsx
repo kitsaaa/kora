@@ -35,9 +35,26 @@ export default function AddProductForm() {
       const formData = new FormData();
       formData.append("file", file);
       const res = await fetch("/api/upload", { method: "POST", body: formData });
-      const data = await res.json();
-      if (res.ok && data.url) uploaded.push(data.url);
-      else setError(data.error || "Image upload failed");
+      
+      // Safely parse JSON response
+      let data;
+      try {
+        const text = await res.text();
+        data = text ? JSON.parse(text) : null;
+      } catch (e) {
+        console.error("Failed to parse upload response:", e);
+        setError("Image upload failed - invalid response");
+        setUploading(false);
+        return;
+      }
+      
+      if (res.ok && data?.url) {
+        uploaded.push(data.url);
+      } else {
+        setError(data?.error || "Image upload failed");
+        setUploading(false);
+        return;
+      }
     }
     setImages(imgs => [...imgs, ...uploaded]);
     setUploading(false);
@@ -56,17 +73,28 @@ export default function AddProductForm() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ title, slug, category, available, images, variants }),
     });
-    const data = await res.json();
+    
+    // Safely parse JSON response
+    let data;
+    try {
+      const text = await res.text();
+      data = text ? JSON.parse(text) : null;
+    } catch (e) {
+      console.error("Failed to parse response:", e);
+      setError("Failed to create product - invalid response");
+      return;
+    }
+    
     if (res.ok) {
       setSuccess("Product created!");
       setTimeout(() => router.push("/admin/products"), 1000);
     } else {
-      setError(data.error || "Failed to create product");
+      setError(data?.error || "Failed to create product");
     }
   }
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-xl mx-auto bg-white dark:bg-zinc-900 p-8 rounded shadow-md border border-zinc-200 dark:border-zinc-800 flex flex-col gap-4">
+    <form onSubmit={handleSubmit} className="max-w-xl mx-auto bg-white p-8 rounded shadow-md border border-zinc-200 flex flex-col gap-4">
       <h2 className="text-xl font-bold mb-2">Add Product</h2>
       {error && <div className="text-red-600 text-sm">{error}</div>}
       {success && <div className="text-green-600 text-sm">{success}</div>}

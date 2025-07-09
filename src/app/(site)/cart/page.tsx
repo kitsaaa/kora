@@ -32,7 +32,7 @@ export default function CartPage() {
   }, 0);
 
   return (
-    <div className="max-w-2xl mx-auto mt-12 p-6 bg-white dark:bg-zinc-900 rounded shadow-md border border-zinc-200 dark:border-zinc-800">
+    <div className="max-w-2xl mx-auto mt-12 p-6 bg-white rounded shadow-md border border-zinc-200">
       <h1 className="text-2xl font-bold mb-6">Корзина</h1>
       {status !== "authenticated" ? (
         <div className="text-center text-zinc-600">Пожалуйста, войдите, чтобы просматривать корзину.</div>
@@ -44,7 +44,7 @@ export default function CartPage() {
         <div className="text-zinc-600">Ваша корзина пуста.</div>
       ) : (
         <>
-          <ul className="divide-y">
+          <ul className="divide-y divide-zinc-200">
             {cart.map((item) => (
               <li key={item.id} className="py-3 flex justify-between items-center">
                 <div>
