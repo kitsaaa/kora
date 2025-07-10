@@ -41,7 +41,7 @@ export default function Header() {
       <div className="flex items-center h-14">
         <Link href="/" className="flex items-center gap-3 group">
           <Image src="/logo.png" alt="KORA Logo" width={56} height={56} priority className="h-14 w-auto object-contain" />
-          <span className="text-2xl font-extrabold tracking-wide text-zinc-900 group-hover:text-zinc-700 transition">КОРА</span>
+          <span className="text-2xl font-extrabold tracking-wide text-zinc-900 group-hover:text-zinc-700 transition">KORA</span>
         </Link>
       </div>
       {/* Desktop nav */}

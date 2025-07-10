@@ -34,8 +34,7 @@ interface Product {
 }
 
 async function getProduct(id: string) {
-  const baseUrl = getBaseUrl();
-  const res = await fetch(`${baseUrl}/api/products`, { cache: "no-store" });
+  const res = await fetch(`/api/products`, { cache: "no-store" });
   if (!res.ok) return null;
   const data = await res.json();
   return data.products?.find((p: Product) => p.id === id) || null;
