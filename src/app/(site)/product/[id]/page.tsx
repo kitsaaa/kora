@@ -6,12 +6,6 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useCart } from "../../CartProvider";
 
-function getBaseUrl() {
-  if (process.env.NEXT_PUBLIC_BASE_URL) return process.env.NEXT_PUBLIC_BASE_URL;
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
-  return "http://localhost:3000";
-}
-
 // Add types for product and variant
 interface ProductVariant {
   id: string;
