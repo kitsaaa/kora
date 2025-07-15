@@ -13,7 +13,7 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
   if (!user || user.role !== 'admin') {
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
   }
-  const { title, slug, category, available, images, variants } = await req.json();
+  const { title, slug, category, available, images, variants, description } = await req.json();
   if (!title || !slug || !category || !Array.isArray(images) || !Array.isArray(variants) || variants.length === 0) {
     return NextResponse.json({ error: 'Missing fields' }, { status: 400 });
   }
@@ -27,6 +27,7 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
         category,
         available,
         images,
+        description,
       },
     });
     // Update variants: delete all and recreate (simple approach)

@@ -18,19 +18,19 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
       </div>
       <div className="flex-1 flex flex-col md:flex-row">
         {/* Sidebar */}
-        <aside className={`bg-zinc-100 text-zinc-900 w-64 max-w-full flex-col p-6 gap-4 fixed md:static top-0 left-0 h-full z-40 transition-transform duration-200 ease-in-out border-r border-zinc-200 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 md:flex md:min-h-screen`}>
+        <aside className={`admin-sidebar w-64 max-w-full flex-col p-6 gap-4 fixed md:static top-0 left-0 h-full z-40 transition-transform duration-200 ease-in-out ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 md:flex md:min-h-screen`}>
           <Link href="/admin" className="text-2xl font-bold mb-8 hover:underline" onClick={() => setSidebarOpen(false)}>Admin</Link>
           <nav className="flex flex-col gap-2">
             <Link href="/admin/products" className="hover:underline" onClick={() => setSidebarOpen(false)}>Products</Link>
             <Link href="/admin/users" className="hover:underline" onClick={() => setSidebarOpen(false)}>Users</Link>
           </nav>
           <div className="flex-1" />
-          <SignOutButton />
+          <div className="admin-btn"><SignOutButton /></div>
         </aside>
         {/* Overlay for mobile */}
         {sidebarOpen && <div className="fixed inset-0 bg-black/40 z-30 md:hidden" onClick={() => setSidebarOpen(false)} />}
         {/* Main content */}
-        <main className="flex-1 p-4 md:p-8 md:ml-0 ml-0">{children}</main>
+        <main className="admin-content flex-1 p-4 md:p-8 md:ml-0 ml-0">{children}</main>
       </div>
     </div>
   );

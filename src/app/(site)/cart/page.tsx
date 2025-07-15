@@ -27,19 +27,19 @@ export default function CartPage() {
                   <span className="w-8 text-center">{item.quantity}</span>
                   <button onClick={() => updateQuantity(item.productId, item.variantId, item.quantity + 1)} className="px-2 py-1 rounded bg-zinc-100 text-zinc-700 hover:bg-zinc-200">+</button>
                 </div>
-                <div className="w-20 text-right text-zinc-900 font-semibold">{item.price} ₽</div>
+                <div className="w-20 text-right text-zinc-900 font-semibold">{item.price != null ? item.price.toLocaleString('ru-RU') : "-"}<span className="ml-0.5">₽</span></div>
                 <button onClick={() => removeFromCart(item.productId, item.variantId)} className="ml-2 text-red-500 hover:text-red-700" aria-label="Удалить">×</button>
               </li>
             ))}
           </ul>
           <div className="flex justify-between items-center mt-8">
             <button onClick={clearCart} className="px-4 py-2 bg-zinc-100 text-zinc-700 rounded hover:bg-zinc-200">Очистить корзину</button>
-            <div className="text-xl font-bold text-zinc-900">Итого: {total} ₽</div>
+            <div className="text-xl font-bold text-zinc-900">Итого: {total.toLocaleString('ru-RU')}<span className="ml-0.5">₽</span></div>
             <button className="px-6 py-2 text-white rounded hover:bg-[#2E6F40]/90 font-semibold" style={{ backgroundColor: '#2E6F40' }}>Оформить заказ</button>
           </div>
         </>
       )}
-      <Link href="/catalog" className="block mt-6 text-blue-700 hover:underline text-center font-medium">← Продолжить покупки</Link>
+      <Link href="/catalog" className="block mt-6 text-[#2E6F40] hover:underline text-center font-medium">← Продолжить покупки</Link>
     </div>
   );
 } 

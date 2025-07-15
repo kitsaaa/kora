@@ -66,10 +66,10 @@ export default function UserAdminTable({ users, currentUserId }: { users: User[]
           <option value="user">user</option>
           <option value="admin">admin</option>
         </select>
-        <button type="submit" className="bg-zinc-900 text-white px-4 py-2 rounded font-semibold hover:bg-zinc-800 disabled:opacity-60" disabled={creating}>Create</button>
+        <button type="submit" className="admin-btn" disabled={creating}>Create</button>
       </form>
       <div className="overflow-x-auto">
-        <table className="min-w-full text-sm border-t">
+        <table className="admin-table">
           <thead>
             <tr className="border-b">
               <th className="py-2 text-left">Name</th>

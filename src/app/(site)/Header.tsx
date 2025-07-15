@@ -82,7 +82,9 @@ export default function Header() {
           </nav>
           <div className="flex flex-col items-center gap-4 mt-16 w-full max-w-xs">
             <div className="flex justify-center w-full mb-2">
-              <CartButton />
+              <div onClick={() => setMenuOpen(false)}>
+                <CartButton />
+              </div>
             </div>
             {session?.user ? (
               <>

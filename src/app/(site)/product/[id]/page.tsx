@@ -45,7 +45,7 @@ function ProductDetailsPageClient({ params }: { params: Promise<{ id: string }> 
   const { addToCart } = useCart();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
-  const [showSuccess, setShowSuccess] = useState(false);
+  const [justAdded, setJustAdded] = useState<{qty: number}|null>(null);
 
   // Fetch product on mount
   useEffect(() => {
@@ -58,11 +58,11 @@ function ProductDetailsPageClient({ params }: { params: Promise<{ id: string }> 
   }, [params]);
 
   useEffect(() => {
-    if (showSuccess) {
-      const t = setTimeout(() => setShowSuccess(false), 2000);
+    if (justAdded) {
+      const t = setTimeout(() => setJustAdded(null), 2000);
       return () => clearTimeout(t);
     }
-  }, [showSuccess]);
+  }, [justAdded]);
 
   if (loading) return <div className="p-8 text-center">Loading...</div>;
   if (!product) return notFound();
@@ -79,18 +79,13 @@ function ProductDetailsPageClient({ params }: { params: Promise<{ id: string }> 
       variantLabel: variant.size,
       price: variant.price,
     });
-    setShowSuccess(true);
+    setJustAdded({qty: quantity});
   };
 
   // Add a dark green for category
   const CATEGORY_GREEN = "#17633a";
   return (
     <div className="relative max-w-3xl mx-auto bg-white rounded-2xl shadow-lg border border-zinc-100 p-6 mt-8 text-zinc-900">
-      {showSuccess && (
-        <div className="absolute top-4 right-4 bg-green-500 text-white px-4 py-2 rounded shadow-lg z-50 animate-fade-in">
-          Добавлено в корзину!
-        </div>
-      )}
       <div className="flex flex-col md:flex-row gap-8">
         <div className="flex-1 flex flex-col items-center">
           {product.images && product.images.length > 0 && (
@@ -114,13 +109,15 @@ function ProductDetailsPageClient({ params }: { params: Promise<{ id: string }> 
               ))}
             </div>
           )}
+          {product.description && (
+            <div className="text-zinc-800 mt-6 mb-2 text-base leading-relaxed text-center md:text-left w-full">{product.description}</div>
+          )}
         </div>
         <div className="flex-1 flex flex-col gap-4">
           <h1 className="text-3xl font-bold text-zinc-900">{product.title}</h1>
           <div className="mb-0.5">
             <span className="font-semibold">Категория:</span> <span style={{ color: CATEGORY_GREEN }}>{product.category}</span>
           </div>
-          <div className="text-zinc-800 mb-2 text-base leading-relaxed">{product.description}</div>
           <div className="mb-2">
             <span className="font-semibold text-zinc-900">Variants:</span>
             <div className="mt-0 flex flex-col gap-2">
@@ -138,7 +135,7 @@ function ProductDetailsPageClient({ params }: { params: Promise<{ id: string }> 
                     className="accent-zinc-900"
                   />
                   <span className="font-medium text-zinc-900">{v.size}</span>
-                  <span className="ml-2 text-zinc-900 font-bold" style={{ color: '#2E6F40' }}>{v.price}₽</span>
+                  <span className="ml-2 text-zinc-900 font-bold" style={{ color: '#2E6F40' }}>{v.price.toLocaleString('ru-RU')}<span className="ml-0.5">₽</span></span>
                 </label>
               ))}
             </div>
@@ -154,12 +151,11 @@ function ProductDetailsPageClient({ params }: { params: Promise<{ id: string }> 
             />
           </div>
           <button
-            className={`mt-4 px-6 py-2 rounded font-semibold transition text-lg shadow-sm ${selectedVariant ? "text-white hover:bg-[#2E6F40]/90" : "bg-zinc-300 text-zinc-500 cursor-not-allowed"}`}
-            style={selectedVariant ? { backgroundColor: '#2E6F40' } : {}}
+            className={`mt-4 px-6 py-2 rounded font-semibold text-lg shadow-sm transition-colors duration-700 ${selectedVariant ? (justAdded ? "bg-[#8B5C2A] text-white" : "bg-[#2E6F40] text-white hover:bg-[#8B5C2A]") : "bg-zinc-300 text-zinc-500 cursor-not-allowed"}`}
             disabled={!selectedVariant}
             onClick={handleAddToCart}
           >
-            В корзину
+            {justAdded ? `В корзине (${justAdded.qty}шт)` : "В корзину"}
           </button>
           <Link href="/catalog" className="mt-2 hover:underline font-medium" style={{ color: '#2E6F40' }}>← Назад к каталогу</Link>
         </div>

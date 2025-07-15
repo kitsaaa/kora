@@ -5,7 +5,7 @@ export default function SignOutButton() {
   return (
     <button
       onClick={() => signOut({ callbackUrl: "/auth/signin" })}
-      className="mt-auto bg-zinc-900 hover:bg-zinc-800 text-white px-4 py-2 rounded font-semibold w-full"
+      className="admin-btn mt-auto w-full"
     >
       Sign Out
     </button>

@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 type ProductVariant = { id?: string; size: string; price: number };
-type Product = { id: string; title: string; slug: string; category: string; available: boolean; images: string[]; variants: ProductVariant[] };
+type Product = { id: string; title: string; slug: string; category: string; available: boolean; images: string[]; variants: ProductVariant[]; description?: string };
 
 export default function EditProductForm({ product }: { product: Product }) {
   const [title, setTitle] = useState(product.title);
@@ -12,6 +12,7 @@ export default function EditProductForm({ product }: { product: Product }) {
   const [category, setCategory] = useState(product.category);
   const [available, setAvailable] = useState(product.available);
   const [images, setImages] = useState<string[]>(product.images || []);
+  const [description, setDescription] = useState(product.description || "");
   const [uploading, setUploading] = useState(false);
   const [variants, setVariants] = useState<ProductVariant[]>(product.variants.map((v) => ({ id: v.id, size: v.size, price: v.price })));
   const [error, setError] = useState("");
@@ -78,7 +79,7 @@ export default function EditProductForm({ product }: { product: Product }) {
     const res = await fetch(`/api/admin/products/${product.id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, slug, category, available, images, variants }),
+      body: JSON.stringify({ title, slug, category, available, images, variants, description }),
     });
     
     // Safely parse JSON response
@@ -134,6 +135,7 @@ export default function EditProductForm({ product }: { product: Product }) {
       <input type="text" placeholder="Title" className="input input-bordered" value={title} onChange={e => setTitle(e.target.value)} required />
       <input type="text" placeholder="Slug" className="input input-bordered" value={slug} onChange={e => setSlug(e.target.value)} required />
       <input type="text" placeholder="Category" className="input input-bordered" value={category} onChange={e => setCategory(e.target.value)} required />
+      <textarea placeholder="Description" className="input input-bordered min-h-[80px]" value={description} onChange={e => setDescription(e.target.value)} />
       <label className="flex items-center gap-2">
         <input type="checkbox" checked={available} onChange={e => setAvailable(e.target.checked)} /> Available
       </label>

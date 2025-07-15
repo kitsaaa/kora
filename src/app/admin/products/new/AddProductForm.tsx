@@ -11,6 +11,7 @@ export default function AddProductForm() {
   const [images, setImages] = useState<string[]>([]);
   const [uploading, setUploading] = useState(false);
   const [variants, setVariants] = useState([{ size: "", price: 0 }]);
+  const [description, setDescription] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const router = useRouter();
@@ -71,7 +72,7 @@ export default function AddProductForm() {
     const res = await fetch("/api/admin/products", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, slug, category, available, images, variants }),
+      body: JSON.stringify({ title, slug, category, available, images, variants, description }),
     });
     
     // Safely parse JSON response
@@ -101,6 +102,7 @@ export default function AddProductForm() {
       <input type="text" placeholder="Title" className="input input-bordered" value={title} onChange={e => setTitle(e.target.value)} required />
       <input type="text" placeholder="Slug" className="input input-bordered" value={slug} onChange={e => setSlug(e.target.value)} required />
       <input type="text" placeholder="Category" className="input input-bordered" value={category} onChange={e => setCategory(e.target.value)} required />
+      <textarea placeholder="Description" className="input input-bordered min-h-[80px]" value={description} onChange={e => setDescription(e.target.value)} />
       <label className="flex items-center gap-2">
         <input type="checkbox" checked={available} onChange={e => setAvailable(e.target.checked)} /> Available
       </label>

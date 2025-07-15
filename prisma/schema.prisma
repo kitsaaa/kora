@@ -26,6 +26,7 @@ model Product {
   available      Boolean          @default(true)
   variants       ProductVariant[]
   images         String[]         // Array of image URLs
+  description    String?
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
   cartItems      CartItem[]
