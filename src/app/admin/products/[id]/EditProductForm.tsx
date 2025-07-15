@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 type ProductVariant = { id?: string; size: string; price: number };
-type Product = { id: string; title: string; slug: string; category: string; available: boolean; images: string[]; variants: ProductVariant[]; description?: string };
+type Product = { id: string; title: string; slug: string; category: string; available: boolean; images: string[]; variants: ProductVariant[]; description?: string | null };
 
 export default function EditProductForm({ product }: { product: Product }) {
   const [title, setTitle] = useState(product.title);
