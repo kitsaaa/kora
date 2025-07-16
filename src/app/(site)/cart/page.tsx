@@ -18,6 +18,13 @@ export default function CartPage() {
           <ul className="divide-y divide-zinc-200">
             {cart.map((item) => (
               <li key={item.productId + item.variantId} className="flex items-center gap-4 py-4">
+                {item.image && (
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="w-16 h-16 object-contain rounded"
+                  />
+                )}
                 <div className="flex-1">
                   <div className="font-semibold text-lg text-zinc-900">{item.title}</div>
                   <div className="text-sm text-zinc-600">{item.variantLabel}</div>

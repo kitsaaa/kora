@@ -78,6 +78,7 @@ function ProductDetailsPageClient({ params }: { params: Promise<{ id: string }> 
       title: product.title,
       variantLabel: variant.size,
       price: variant.price,
+      image: product.images && product.images.length > 0 ? product.images[0] : undefined,
     });
     setJustAdded({qty: quantity});
   };

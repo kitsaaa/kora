@@ -20,7 +20,7 @@ export default function CatalogPage() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 bg-white min-h-screen">
-      <h1 className="text-3xl font-bold mb-8 text-center text-zinc-900">Каталог</h1>
+      <h1 className="text-3xl font-bold mb-8 mt-6 text-center text-zinc-900">Каталог</h1>
       {loading ? (
         <div className="text-center text-zinc-500">Loading...</div>
       ) : products.length === 0 ? (
