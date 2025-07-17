@@ -39,7 +39,7 @@ export default function Header() {
   return (
     <header className="w-full bg-white text-zinc-900 py-4 px-4 sm:px-8 flex items-center justify-between relative z-30 border-b border-zinc-200">
       <div className="flex items-center h-14">
-        <Link href="/" className="flex items-center gap-3 group">
+        <Link href="/" className="flex items-center gap-1 group">
           <Image src="/logo.png" alt="KORA Logo" width={56} height={56} priority className="h-14 w-auto object-contain" />
           <span className="text-2xl font-extrabold tracking-wide text-zinc-900 group-hover:text-zinc-700 transition">KORA</span>
         </Link>
