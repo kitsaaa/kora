@@ -56,7 +56,7 @@ export default function Home() {
           <div className="flex flex-col justify-center items-center w-full md:w-3/5 h-full mb-8 md:mb-0">
             <Image src="/small-field.png" alt="Field" width={700} height={500} className="w-full h-auto max-w-[400px] md:max-w-[700px] object-cover" />
           </div>
-          <div className="w-full md:w-2/5 flex flex-col justify-center items-center px-4 md:px-20 md:ml-10" style={{ minWidth: '480px', maxWidth: '600px' }}>
+          <div className="w-full md:w-2/5 flex flex-col justify-center items-center px-4 md:px-20 md:ml-10 md:min-w-[500px]">
             <CallbackForm />
           </div>
         </div>
