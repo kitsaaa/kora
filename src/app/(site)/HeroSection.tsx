@@ -7,7 +7,7 @@ export default function HeroSection() {
     if (pathname !== "/") return null;
     return (
         <section className="w-full flex justify-center sm:-mt-30">
-            <div className="relative w-full max-w-8xl aspect-[3/2]">
+            <div className="relative w-full max-w-8xl sm:aspect-[3/2] aspect-[3/2.5]">
                 {/* Overlay: logo and name at the top in a row */}
                 <div className="absolute top-1/2 -translate-y-1/2 w-full flex flex-row items-center z-10 justify-center -ml-15">
                     <div className="w-18 h-18 sm:w-[154px] sm:h-[154px]">
