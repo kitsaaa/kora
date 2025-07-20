@@ -1,55 +1,13 @@
 "use client";
 
-import { motion } from "framer-motion";
 import React from "react"; // Added for React state
 import Image from "next/image";
 
 export default function Home() {
-  const cards = [
-    {
-      title: "360 гектаров",
-      description: "Собственный питомник площадью 360 га — один из крупнейших в СНГ.",
-      icon: "/area.png",
-      alt: "Площадь 360 га"
-    },
-    {
-      title: "Десятки тысяч взрослых деревьев",
-      description: "Коллекция отобранных растений, готовых к пересадке и ландшафтным проектам любого масштаба.",
-      icon: "/pine-tree.png",
-      alt: "Десятки тысяч деревьев"
-    },
-    {
-      title: "Доставка, посадка и гарантия 3 года",
-      description: "Работаем по всему СНГ: бережно доставим, посадим и обеспечим приживаемость под договор.",
-      icon: "/protected.png",
-      alt: "Гарантия"
-    },
-  ];
-
   return (
     <>
       {/* Add your main content here */}
-      <section className="w-full flex justify-center mt-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-7xl w-full px-4">
-          {cards.map((card, idx) => (
-            <motion.div
-              key={card.title}
-              className="bg-white rounded-2xl border border-zinc-100 p-8 flex flex-col items-center text-center"
-              style={{ boxShadow: '0 12px 48px 0 rgba(46, 111, 64, 0.32)' }}
-              initial={{ opacity: 0, y: 60 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.7, delay: idx * 0.2 }}
-            >
-              <div className="w-16 h-16 mb-5 flex items-center justify-center rounded-full bg-[#F3F7F4]">
-                <Image src={card.icon} alt={card.alt} width={40} height={40} className="w-10 h-10 object-contain" />
-              </div>
-              <h3 className="text-2xl md:text-3xl font-extrabold mb-3" style={{ color: '#2E6F40' }}>{card.title}</h3>
-              <p className="text-zinc-600 text-base">{card.description}</p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
+      
       {/* Callback Request Form */}
       <section className="w-full flex justify-center mt-16 mb-20">
         <div className="flex flex-col md:flex-row items-center justify-center gap-0 w-full max-w-6xl min-h-[400px]">
